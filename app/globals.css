@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.timer {
+  --percent: 0%;
+  background:  conic-gradient(theme('colors.gray.100') var(--percent), 0, theme('colors.indigo.500')) ;
+}
