@@ -1,9 +1,12 @@
 "use client";
 
+import gsap from "gsap";
 import moment, { Moment } from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Counter() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   const [seconds, setSeconds] = useState<number>(0);
   const [date, setDate] = useState<Moment | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
@@ -29,6 +32,7 @@ export default function Counter() {
         const remainingSeconds: number = date.diff(moment(), "seconds");
 
         if (remainingSeconds == 0) {
+          audioRef.current?.play();
           clearInterval(intervalID);
         }
 
@@ -47,7 +51,13 @@ export default function Counter() {
       }}
     >
       <div className="w-full h-full bg-gray-100 rounded-full flex items-center justify-center text-xl">
-        {moment(remainingSeconds, "ss").format("HH:mm:ss")}
+        {moment.utc(remainingSeconds * 1000).format("HH:mm:ss")}
+        <audio
+          ref={audioRef}
+          className="pointer-events-none opacity-0"
+          src="/audio/mixkit-alert-quick-chime-766.mp3"
+          loop
+        ></audio>
       </div>
     </div>
   );
