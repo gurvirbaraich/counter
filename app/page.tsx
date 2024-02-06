@@ -17,8 +17,10 @@ export default function HomePage() {
   return (
     <main className="w-screen h-screen overflow-hidden bg-gray-950 grid place-items-center">
       <div className={`w-full max-w-sm bg-white rounded overflow-hidden p-4 flex ${playingTimer ? "flex-col gap-10 p-6" : "justify-between"}`}>
-        <div className={playingTimer ? "w-full" : "hidden"}>
-          <Counter />
+        <div className={playingTimer ? "w-full" : ""}>
+          {
+            playingTimer ? (<Counter />) : (null)
+          }
         </div>
 
         <div className={`flex gap-1 ${playingTimer && "hidden"}`}>
@@ -36,7 +38,7 @@ export default function HomePage() {
               height={10}
               src={playingTimer ? PauseSVG.src : PlaySVG.src}
             />
-            <span>{playingTimer ? "Pause" : "Begin"} Timer</span>
+            <span>{playingTimer ? "Close" : "Begin"} Timer</span>
           </button>
         </div>
       </div>

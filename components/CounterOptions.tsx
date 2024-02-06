@@ -1,15 +1,13 @@
 "use client";
 
+import { formatter } from "@/utils/formatter";
+import moment from "moment";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function CounterOptions() {
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
-
-  const formatter = new Intl.NumberFormat("en-in", {
-    minimumIntegerDigits: 2,
-  });
 
   const updateTimer = (e: ChangeEvent<HTMLSelectElement>) => {
     const fragmentName = e.target.name;
@@ -43,11 +41,9 @@ export default function CounterOptions() {
   useEffect(() => {
     localStorage.setItem(
       "time",
-      JSON.stringify({
-        hours,
-        minutes,
-        seconds,
-      })
+      JSON.stringify(
+        moment.duration(`${hours}:${minutes}:${seconds}`).asSeconds()
+      )
     );
   }, [hours, minutes, seconds]);
 
